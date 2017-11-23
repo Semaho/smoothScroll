@@ -51,15 +51,19 @@ var position = function(start, end, elapsed, duration) {
 // if the first argument is numeric then scroll to this location
 // if the callback exist, it is called when the scrolling is finished
 // if context is set then scroll that element, else scroll window
-var smoothScroll = function(el, duration, callback, context){
-    duration = duration || 500;
-    context = context || window;
+// offset   int   Offset value (+ or -), to deal with stuff like sticky header.
+
+var smoothScroll = function(el, duration, callback, context, offset)
+{
+    duration  = duration || 500;
+    context   = context || window;
+    offset    = offset || 0;
     var start = context.scrollTop || window.pageYOffset;
 
     if (typeof el === 'number') {
-      var end = parseInt(el);
+      var end = parseInt(el) + offset;
     } else {
-      var end = getTop(el, start);
+      var end = getTop(el, start) + offset;
     }
 
     var clock = Date.now();
